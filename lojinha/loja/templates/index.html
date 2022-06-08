@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% load static %}
+    <h1>Produtos</h1> 
+    <div>
+        <h2>Cadastre um produto:</h2>
+        <form method="POST" name="form_produto" id="form_produto">
+            {% csrf_token %}
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome">
+    
+            <label for="qtd">Quantidade estoque:</label>
+            <input type="number" name="qtd" id="qtd">
+            
+            <label for="preco">Preço Unitario:</label>
+            <input type="number" name="preco" id="preco" step=".01">
+    
+            <label for="img">Imagem:</label>
+            <input type="text" name="img" id="img">
+    
+            <label for="ativo">Ativo</label>
+            <input type="checkbox" name="ativo" id="ativo" value="True">
+            <button type="submit">Adcionar</button>
+        </form>
+    </div>
+    <br>
+    <div>
+        <form action="" name="form_search" id="form_search">
+            <label for="search">Search:</label>
+            <input type="search" name="search" id="search_field">
+            <button type="submit">Search</button>
+        </form>
+
+        <h2>lista de Produtos</h2>
+        <div id="content">
+            {% for produto in produtos%}
+            <p>
+                Nome:{{ produto.nome }}  preço:{{ produto.preco_unitario }}
+            </p>
+            {% empty %}
+                <p>Não há produtos :(</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $("#form_produto").submit(function (e) {
+        e.preventDefault();
+        
+        $.ajax({
+            type : "POST", 
+            url: "{% url 'add' %}",
+            data: $('#form_produto').serialize(),
+
+            success: function(res) {
+                console.log(res);
+                }
+            });
+        });
+
+
+    $("#form_search").submit(function (e){
+        e.preventDefault();
+        let param = $('#search_field').val();
+        console.log(param);
+        $.ajax({
+            type : "GET",
+            url : "{% url 'busca' %}",
+            data: {'src': param},
+            
+            success: function(res) {
+                console.log(res);
+                $('#content').html(res)
+                }
+            });
+        });
+    
+</script>

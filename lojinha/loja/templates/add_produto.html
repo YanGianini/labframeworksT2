@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add</title>
+</head>
+<body>
+    <form action="{% url 'add' %}" method="POST">
+        {% csrf_token %}
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="">
+
+        <label for="qtd">Quantidade estoque:</label>
+        <input type="number" name="qtd" id="">
+        
+        <label for="preco">Preço Unitario:</label>
+        <input type="number" name="preco" id="">
+
+        <label for="img">Imagem:</label>
+        <input type="text" name="img" id="">
+
+        <label for="ativo">Ativo</label>
+        <input type="checkbox" name="ativo" id="" value="True">
+        <button type="submit">Adcionar</button>
+    </form>
+</body>
+</html>

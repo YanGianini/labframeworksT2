@@ -1,0 +1,7 @@
+{% for produto in produtos%}
+    <p>
+        Nome:{{ produto.nome }}  preço:{{ produto.preco_unitario }}
+    </p>
+{% empty %}
+    <p>Não há produtos :(</p>
+{% endfor %}
